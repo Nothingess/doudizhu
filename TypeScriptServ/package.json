@@ -1,0 +1,16 @@
+{
+  "name": "ts_serv",
+  "version": "1.0.0",
+  "description": "a server project for typescript",
+  "main": "ts_build/serv.js",
+  "scripts": {
+    "start": "node ts_build/serv.js"
+  },
+  "author": "Tery",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^12.12.17",
+    "@types/ws": "^6.0.4",
+    "ws": "^7.2.0"
+  }
+}
