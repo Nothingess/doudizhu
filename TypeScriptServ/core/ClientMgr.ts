@@ -1,6 +1,5 @@
 import { Client } from "./Client";
 import WebSocket = require("ws");
-import { IncomingMessage } from "http";
 
 export class ClientMgr {
 
