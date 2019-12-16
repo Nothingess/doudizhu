@@ -47,36 +47,36 @@ const CardsValue = {
         name: 'Boom',
         value: 2
     },
-    threeWithOne: {
-        name: 'ThreeWithOne',
+    threeAndOne: {
+        name: 'ThreeAndOne',
         value: 1
     },
-    threeWithTwo: {
-        name: 'ThreeWithTwo',
+    threeAndTwo: {
+        name: 'ThreeAndTwo',
         value: 1
     },
     plane: {
         name: 'Plane',
         value: 1
     },
-    planeWithOne: {
-        name: 'PlaneWithOne',
+    planeAndOne: {
+        name: 'PlaneAndOne',
         value: 1
     },
-    planeWithTwo: {
-        name: 'PlaneWithTwo',
+    planeAndTwo: {
+        name: 'PlaneAndTwo',
         value: 1
     },
-    scroll: { //顺子
-        name: 'Scroll',
+    straight: { //顺子
+        name: 'Straight',
         value: 1
     },
-    doubleScroll: {  //连对
-        name: 'DoubleScroll',
+    lianDui: {  //连对
+        name: 'LianDui',
         value: 1
     },
-    kingboom: { //王炸
-        name: 'kingboom',
+    jokerboom: { //王炸
+        name: 'Jokerboom',
         value: 3
     }
 };
