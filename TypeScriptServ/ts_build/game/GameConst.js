@@ -12,6 +12,7 @@ var CardType;
     /**黑桃 */
     CardType[CardType["SPADE"] = 4] = "SPADE";
 })(CardType = exports.CardType || (exports.CardType = {}));
+/**牌面大小 */
 var CardVal;
 (function (CardVal) {
     CardVal[CardVal["THREE"] = 1] = "THREE";
@@ -32,3 +33,54 @@ var CardVal;
     /**大王 */
     CardVal[CardVal["BIG"] = 15] = "BIG";
 })(CardVal = exports.CardVal || (exports.CardVal = {}));
+//牌型之间大小数值的定义
+var CardsValue = {
+    one: {
+        name: 'One',
+        value: 1
+    },
+    double: {
+        name: 'Double',
+        value: 1
+    },
+    three: {
+        name: 'Three',
+        value: 1
+    },
+    boom: {
+        name: 'Boom',
+        value: 2
+    },
+    threeAndOne: {
+        name: 'ThreeAndOne',
+        value: 1
+    },
+    threeAndTwo: {
+        name: 'ThreeAndTwo',
+        value: 1
+    },
+    plane: {
+        name: 'Plane',
+        value: 1
+    },
+    planeAndOne: {
+        name: 'PlaneAndOne',
+        value: 1
+    },
+    planeAndTwo: {
+        name: 'PlaneAndTwo',
+        value: 1
+    },
+    straight: {
+        name: 'Straight',
+        value: 1
+    },
+    lianDui: {
+        name: 'LianDui',
+        value: 1
+    },
+    jokerboom: {
+        name: 'Jokerboom',
+        value: 3
+    }
+};

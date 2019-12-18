@@ -29,56 +29,62 @@ export enum CardVal {
     /**大王 */
     BIG
 }
-//牌型之间大小数值的定义
-const CardsValue = {
-    one: {
-        name: 'One',
-        value: 1
-    },
-    double: {
-        name: 'Double',
-        value: 1
-    },
-    three: {
-        name: 'Three',
-        value: 1
-    },
-    boom: { //炸弹
-        name: 'Boom',
-        value: 2
-    },
-    threeAndOne: {
-        name: 'ThreeAndOne',
-        value: 1
-    },
-    threeAndTwo: {
-        name: 'ThreeAndTwo',
-        value: 1
-    },
-    plane: {
-        name: 'Plane',
-        value: 1
-    },
-    planeAndOne: {
-        name: 'PlaneAndOne',
-        value: 1
-    },
-    planeAndTwo: {
-        name: 'PlaneAndTwo',
-        value: 1
-    },
-    straight: { //顺子
-        name: 'Straight',
-        value: 1
-    },
-    lianDui: {  //连对
-        name: 'LianDui',
-        value: 1
-    },
-    jokerboom: { //王炸
-        name: 'Jokerboom',
-        value: 3
-    }
-};
+/**出牌类型 */
+export enum PlayCardType {
+    /**无类型，属于不能出的牌型 */
+    NONE = 0,
+    /**单张 */
+    SINGLE,
+    /**一对 */
+    DOUBLE,
+    /**三张不带 */
+    THREE,
+    /**三带一 */
+    THREE_AND_ONE,
+    /**三带二 */
+    THREE_AND_TWO,
+    /**普通炸弹 */
+    BOOM,
+    /**王炸 */
+    JOKER_BOOM,
+    /**飞机 */
+    PLAN,
+    /**飞机带单 */
+    PLAN_AND_ONO,
+    /**飞机带对 */
+    PLAN_ADN_TWO,
+    /**顺子 */
+    STRAIGHT,
+    /**连对（双顺） */
+    LIAN_DUI
+}
+
+//#region PlayCardValue
+/**
+ * 出牌类型之间大小数值的定义
+ * ## value值大的可以打value小的牌
+ * ## 如果value一样大，则判断牌型，牌型一样再判断大小
+ */
+const PlayCardValue: Map<PlayCardType, number> = new Map<PlayCardType, number>();
+PlayCardValue.set(PlayCardType.SINGLE, 1);
+PlayCardValue.set(PlayCardType.DOUBLE, 1);
+PlayCardValue.set(PlayCardType.THREE, 1);
+PlayCardValue.set(PlayCardType.THREE_AND_ONE, 1);
+PlayCardValue.set(PlayCardType.THREE_AND_TWO, 1);
+PlayCardValue.set(PlayCardType.BOOM, 2);
+PlayCardValue.set(PlayCardType.JOKER_BOOM, 3);
+PlayCardValue.set(PlayCardType.PLAN, 1);
+PlayCardValue.set(PlayCardType.PLAN_AND_ONO, 1);
+PlayCardValue.set(PlayCardType.PLAN_ADN_TWO, 1);
+PlayCardValue.set(PlayCardType.STRAIGHT, 1);
+PlayCardValue.set(PlayCardType.LIAN_DUI, 1);
+/**通过PlayCardType获取牌面值大小 */
+export function getPlayCardValue(playCardType: PlayCardType): number {
+    let val: number | undefined = PlayCardValue.get(playCardType);
+    if (!!val) return val;
+    return -1;
+}
+//#endregion
+
 
 

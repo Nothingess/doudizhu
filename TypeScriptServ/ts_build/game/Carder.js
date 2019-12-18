@@ -143,7 +143,7 @@ var Carder = /** @class */ (function () {
     };
     /**飞机不带 */
     Carder.prototype.isPlannAndNone = function (cardList) {
-        if (cardList.length !== 6)
+        if (cardList.length < 6 || cardList.length > 21)
             return false;
         //方法一（对于已排序的 cardList）
         //判断是否相邻
@@ -156,52 +156,108 @@ var Carder = /** @class */ (function () {
                 } */
         //方法二 （对于乱序的 cardList）
         //分类，相同数字的牌放一堆（如：333 444 两堆）
+        /*         let map: Map<number, number> = new Map<number, number>();
+                this.classify(map, cardList);
+                //牌堆数量
+                if (map.size !== 2) return false;
+                let cardVal: Array<number> = [];
+                map.forEach((v, k) => {//检测牌堆里有几张牌
+                    if (v !== 3) return false;
+                    cardVal.push(k);
+                })
+                //判断相邻
+                if (Math.abs(cardVal[0] - cardVal[1]) !== 1) return false;
+        
+                return true; */
+        //不能有2或者大小王
+        for (var i = 0; i < cardList.length; i++) {
+            if (cardList[i].getNumber() >= GameConst_1.CardVal.TWO) {
+                return false;
+            }
+        }
+        //分类
         var map = new Map();
         this.classify(map, cardList);
-        //牌堆数量
-        if (map.size !== 2)
+        map.forEach(function (v, k) { if (v !== 3)
+            return false; });
+        if (map.size < 2)
             return false;
-        var cardVal = [];
-        map.forEach(function (v, k) {
-            if (v !== 3)
+        //判断是否是按顺序三重复的排序
+        for (var j = 0; j < cardList.length - 3; j += 3) {
+            if (cardList[j + 3].getNumber() - cardList[j].getNumber() !== 1)
                 return false;
-            cardVal.push(k);
-        });
-        //判断相邻
-        if (Math.abs(cardVal[0] - cardVal[1]) !== 1)
-            return false;
+        }
         return true;
     };
-    /**飞机带两个单(也可以带一对) */
+    /**
+     * 飞机带单
+     *  ##所有可能
+     *      333 444                         34          45          55          56
+     *      333 444 555                     345         566         666         678
+     *      333 444 555 666                 3456        6777        7777        789 10
+     *      333 444 555 666 777             34567       78888       88889       89 10 J
+     */
     Carder.prototype.isPlanAndsingle = function (cardList) {
-        if (cardList.length !== 8)
+        if (cardList.length < 8 || cardList.length > 20)
             return false;
         //分类，相同数字的牌放一堆
         var map = new Map();
         this.classify(map, cardList);
-        //单独的那两张是一对的也可以，如：[333 444 55] [333 444 56]（这两首牌都可以）
-        if (map.size !== 3 && map.size !== 4)
-            return false;
-        //判断是否有两堆牌里有三张牌
-        var threeList = new Array(); //这里存的是key（即：牌面数字大小）
-        var otherList = new Array();
+        var threeList = new Array(); //把所有三张的剔除到这里
+        var otherList = new Array(); //把其他单张或者一对的剔除到这里
         map.forEach(function (v, k) {
-            if (v === 3) {
-                threeList.push(k);
-            }
-            else if (v === 2) {
-                otherList.push(k);
-                otherList.push(k);
-            }
-            else {
-                otherList.push(k);
+            switch (v) {
+                case 1:
+                    otherList.push(k);
+                    break;
+                case 2:
+                    otherList.push(k);
+                    otherList.push(k);
+                    break;
+                case 3:
+                    threeList.push(k);
+                    break;
+                case 4: //存在有炸弹，把炸弹拆开 如：3333拆成 333、3
+                    otherList.push(k);
+                    threeList.push(k);
+                    break;
+                default:
+                    break;
             }
         });
-        if (threeList.length !== 2 || otherList.length !== 2)
-            return false;
-        //判断飞机是否相邻
-        if (Math.abs(threeList[0] - threeList[1]) !== 1)
-            return false;
+        if (threeList.length < 2)
+            return false; //三张的牌堆少于两堆，组不成飞机
+        //判断三张的牌堆数是否大于单张数量，如果大于则需要
+        //剔除一组三张牌堆作为带牌（最多只能剔除一堆，有手牌数上限决定）
+        if (threeList.length > otherList.length) {
+            console.log("threeList :" + threeList + "-otherList :" + otherList);
+            console.log(threeList[threeList.length - 1] + " - " + threeList[threeList.length - 2]);
+            //threeList可以看作是已排序的，所以只需要判断前后两端是否排好序
+            if (threeList[threeList.length - 1] - threeList[threeList.length - 2] !== 1) {
+                var k = threeList.pop();
+                if (!!k) {
+                    otherList.push(k);
+                    otherList.push(k);
+                    otherList.push(k);
+                }
+            }
+            else {
+                var k = threeList.shift();
+                if (!!k) {
+                    otherList.push(k);
+                    otherList.push(k);
+                    otherList.push(k);
+                }
+            }
+        }
+        console.log("threeList len:" + threeList + "-otherList len:" + otherList);
+        if (threeList.length !== otherList.length)
+            return false; //三张牌堆数跟单张排数还是不相等
+        //判断是否连续
+        for (var i = 0; i < threeList.length - 1; i++) {
+            if (threeList[i + 1] - threeList[i] !== 1)
+                return false;
+        }
         return true;
     };
     /**飞机带两对 */
@@ -305,6 +361,7 @@ var Carder = /** @class */ (function () {
     Carder.prototype.compareBoom = function (cardListA, cardListB) {
         return this.compareSingle(cardListA, cardListB);
     };
+    /**比较王炸 */
     Carder.prototype.compareJokerBoom = function (cardListA, cardListB) {
         return true;
     };
