@@ -1,15 +1,6 @@
 import { ICard, NormalCard } from "./Card";
 import { CardVal, CardType, PlayCardType, getPlayCardValue } from "./GameConst";
 
-/**飞机辅助判断结构体 */
-interface PlanCardSub {
-    cards: Array<ICard>,
-    /**辅助体， 飞机主体的最大值
-     * ## 如：3333 4444 主体是333 444， 其中多余的 3 4 为带牌
-     * ## 主体中最大值为 4
-    */
-    sub: number
-}
 /**发牌器 */
 export class Carder {
     private mCardList: Array<ICard>;

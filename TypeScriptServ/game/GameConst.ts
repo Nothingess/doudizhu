@@ -1,3 +1,11 @@
+/**玩家数据 */
+export interface PlayerInfo {
+    nickName: string,       //昵称
+    accountID: number,      //账号
+    avatarUrl: string,      //头像地址
+    gold: number            //金币数
+}
+
 /**纸牌花色 */
 export enum CardType {
     /**方块 */
