@@ -1,3 +1,15 @@
+/**服务端响应内容 */
+export interface ResponseMsg {
+    cmd: NetCMD,    //响应命令
+    /**
+     * 响应结果
+     * #-1：请求命令不存在
+     * #0：请求失败
+     * #1：请求成功
+     */
+    res: number,
+    data: any       //返回数据
+}
 /**玩家数据 */
 export interface PlayerInfo {
     nickName: string,       //昵称
@@ -5,7 +17,35 @@ export interface PlayerInfo {
     avatarUrl: string,      //头像地址
     gold: number            //金币数
 }
+/**客户端请求命令 */
+export enum NetCMD {
+    /**登陆 */
+    login_in = 1,
+    /**注册 */
+    register,
 
+    //处于大厅中
+    /**发送世界聊天 */
+    chat_to_world,
+    /**发送好友聊天 */
+    chat_to_friend,
+    /**发送好友请求 */
+    add_firend,
+    /**删除好友 */
+    remove_friend,
+    /**拉取好友列表 */
+    pull_friend_info,
+    /**获取玩家信息 */
+    get_player_info,
+    /**获取房间列表 */
+    pull_room_list,
+    /**申请加入房间 */
+    req_room
+
+    //处于对局游戏中
+
+
+}
 /**纸牌花色 */
 export enum CardType {
     /**方块 */
@@ -66,7 +106,6 @@ export enum PlayCardType {
     /**连对（双顺） */
     LIAN_DUI
 }
-
 //#region PlayCardValue
 /**
  * 出牌类型之间大小数值的定义

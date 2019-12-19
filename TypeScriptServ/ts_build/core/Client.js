@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**玩家连接服务器进行登录后实例的对象（网络层） */
 var Client = /** @class */ (function () {
     function Client(mgr, socket) {
         this.mClientMgr = mgr;

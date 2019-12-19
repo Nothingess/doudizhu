@@ -9,8 +9,10 @@
   "author": "Tery",
   "license": "ISC",
   "dependencies": {
+    "@types/mysql": "^2.15.8",
     "@types/node": "^12.12.17",
     "@types/ws": "^6.0.4",
+    "mysql": "^2.17.1",
     "ws": "^7.2.0"
   }
 }
