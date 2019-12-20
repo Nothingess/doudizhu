@@ -1,4 +1,4 @@
-import { NetCMD, ResponseMsg } from "../game/GameConst";
+import { NetCMD, ServRes } from "../game/GameConst";
 import { Client } from "./Client";
 import { Player, GamePlay } from "../game/Player";
 
@@ -28,10 +28,9 @@ export class IHandle {
     public executeCMD(cmd: number, target: Client | Player | GamePlay, arg?: any): void {
         let handle: Function | undefined = this.mInterestCMD.get(cmd);
         if (!handle) {
-            let response: ResponseMsg = {
-                cmd: NetCMD.login_in,
-                res: -1,//命令不存在
-                data: null
+            let response: ServRes = {
+                cmd: cmd,
+                code: -1,//命令不存在
             };
             target.send(JSON.stringify(response));
             return;

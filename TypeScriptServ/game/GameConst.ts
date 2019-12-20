@@ -1,5 +1,5 @@
 /**服务端响应内容 */
-export interface ResponseMsg {
+export interface ServRes {
     cmd: NetCMD,    //响应命令
     /**
      * 响应结果
@@ -7,8 +7,19 @@ export interface ResponseMsg {
      * #0：请求失败
      * #1：请求成功
      */
-    res: number,
-    data: any       //返回数据
+    code: number,
+    data?: any       //返回数据
+}
+/**操作数据库返回的内容 */
+export interface DBRes {
+    /**
+     * 响应结果
+     * #-1：查询错误代码
+     * #0：查询的东西不存在
+     * #1：查询成功
+     */
+    code: number,
+    data?: any
 }
 /**玩家数据 */
 export interface PlayerInfo {
@@ -17,6 +28,11 @@ export interface PlayerInfo {
     avatarUrl: string,      //头像地址
     gold: number            //金币数
 }
+
+
+/**通过接口申明函数类型 */
+export interface dbCallBack { (dbRes: DBRes): void }
+
 /**客户端请求命令 */
 export enum NetCMD {
     /**登陆 */

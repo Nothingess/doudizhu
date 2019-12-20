@@ -41,9 +41,8 @@ var IHandle = /** @class */ (function () {
         var handle = this.mInterestCMD.get(cmd);
         if (!handle) {
             var response = {
-                cmd: GameConst_1.NetCMD.login_in,
-                res: -1,
-                data: null
+                cmd: cmd,
+                code: -1,
             };
             target.send(JSON.stringify(response));
             return;
